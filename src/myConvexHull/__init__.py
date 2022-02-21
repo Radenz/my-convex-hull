@@ -1,12 +1,38 @@
+"""
+This package contains a single `convex_hull` function to calculate
+the points of a convex hull from a given array of points.
+"""
+
 import numpy as np
 from myConvexHull.point_utils import greater_than, less_than
 from myConvexHull.dtype import Points, NullableLine, Line, Point
-from myConvexHull.line import get_farthest_point, get_lower_points, get_upper_points
+from myConvexHull.line_utils import get_farthest_point, get_lower_points, get_upper_points
 from enum import Enum
 
 
-def convex_hull(points, base_line=None, direction=None):
+def convex_hull(points, base_line=None, direction=None) -> Points:
     # type: (Points, NullableLine, Direction) -> Points
+    """
+    Calculates the set of points that construct the convex hull of
+    the given array of points. The calculation is done using divide
+    and conquer algorithm.
+
+    Args:
+
+    `points`: an array of points to calculate the convex hull of
+
+    `base_line`: the base line of previous iteration convex hull points
+
+    `direction`: the direction of which the points of the convex hull is
+                 expanding
+
+    Returns:
+
+    An array of points that construct the convex hull of the given array
+    of points.
+    """
+
+    # TODO: Check if the splitting line is vertical
 
     if base_line:
         if len(points) == 0:
@@ -27,7 +53,7 @@ def convex_hull(points, base_line=None, direction=None):
         chl = convex_hull(new_points_a, new_base_line_a, direction)
         chr = convex_hull(new_points_b, new_base_line_b, direction)
 
-        hull = _merge(chl, farthest_point, chr, direction)
+        hull = merge(chl, farthest_point, chr, direction)
     else:
         (leftmost_point, lmindex) = _get_leftmost_point(points)
         (rightmost_point, rmindex) = _get_rightmost_point(
@@ -37,23 +63,60 @@ def convex_hull(points, base_line=None, direction=None):
         points = np.delete(points, [lmindex, rmindex], axis=0)
 
         line: Line = (leftmost_point, rightmost_point)
-        (upper_points, lower_points) = _split(points, line)
+        (upper_points, lower_points) = split(points, line)
 
         chu = convex_hull(upper_points, line, Direction.UPWARDS)
         chl = convex_hull(lower_points, line, Direction.DOWNWARDS)
-        hull = _first_merge(leftmost_point, chu, rightmost_point, chl)
+        hull = first_merge(leftmost_point, chu, rightmost_point, chl)
 
     return hull
 
 
-def _split(points, line):
+def split(points, line) -> tuple[Points, Points]:
     # type: (Points, Line) -> tuple[Points, Points]
+    """
+    Split a set of points into two sets of points separated
+    by a line. The line is represented by a tuple of 2 points.
+
+    Args:
+
+    `points`: the set of points to split
+
+    `line`: a tuple of 2 points representing a line on which
+            splitting is based
+
+    Returns:
+
+    A tuple of two set of points separated by the line.
+    """
     upper_points = get_upper_points(points, line)
     lower_points = get_lower_points(points, line)
     return (upper_points, lower_points)
 
 
-def _first_merge(left_vertex, upper_vertices, right_vertex, lower_vertices):
+def first_merge(left_vertex, upper_vertices, right_vertex, lower_vertices) -> Points:
+    # type: (Point, Points, Point, Points) -> Points
+    """
+    Merge subsolution of upper points hull and lower points hull
+    after splitted by the line through `left_vertex` and
+    `right_vertex` in the first iteration.
+
+    Args:
+
+    `left_vertex`: the bottom-leftmost point which the line in the
+                   the first iteration pass through
+
+    `upper_vertices`: upper points hull
+
+    `right_vertex`: the top-rightmost point which the line in the
+                   the first iteration pass through
+
+    `lower_vertices`: lower points hull
+
+    Returns:
+
+    An array of points which construct the convex hull.
+    """
     hull = np.ndarray([0, 2])
     hull = np.append(hull, [left_vertex], axis=0)
     hull = np.append(hull, upper_vertices, axis=0)
@@ -63,7 +126,29 @@ def _first_merge(left_vertex, upper_vertices, right_vertex, lower_vertices):
     return hull
 
 
-def _merge(left_vertices, mid_vertex, right_vertices, direction):
+def merge(left_vertices, mid_vertex, right_vertices, direction) -> Points:
+    # type: (Point, Points, Point, Points) -> Points
+    """
+    Merge subsolution of upper points hull and lower points hull
+    after splitted by the line through `left_vertex` and
+    `right_vertex` in the first iteration.
+
+    Args:
+
+    `left_vertices`: leftside points hull
+
+    `mid_vertex`: the farthest point from the line of the previous
+                  iteration
+
+    `right_vertices`: rightside points hull
+
+    `direction`: the direction which the hull is expanding
+
+    Returns:
+
+    An array of points which is the subset of points that
+    construct the convex hull.
+    """
     hull = np.ndarray([0, 2])
     if direction == Direction.UPWARDS:
         hull = np.append(hull, left_vertices, axis=0)
@@ -109,5 +194,8 @@ def _get_rightmost_point(points):
 
 
 class Direction(Enum):
+    """
+    Vertical direction enumerated values.
+    """
     UPWARDS = 0
     DOWNWARDS = 1
