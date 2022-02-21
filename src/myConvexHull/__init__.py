@@ -1,7 +1,7 @@
 import numpy as np
-from point_utils import greater_than, less_than
-from dtype import Points, NullableLine, Line, Point
-from line import get_farthest_point, get_lower_points, get_upper_points
+from myConvexHull.point_utils import greater_than, less_than
+from myConvexHull.dtype import Points, NullableLine, Line, Point
+from myConvexHull.line import get_farthest_point, get_lower_points, get_upper_points
 from enum import Enum
 
 

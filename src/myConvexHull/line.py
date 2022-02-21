@@ -1,5 +1,5 @@
-from dtype import Point, Points, Line
-from point_utils import X, Y
+from myConvexHull.dtype import Point, Points, Line
+from myConvexHull.point_utils import X, Y
 import numpy as np
 
 

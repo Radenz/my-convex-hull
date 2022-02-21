@@ -1,4 +1,4 @@
-from dtype import Point
+from myConvexHull.dtype import Point
 
 Y = 1
 X = 0

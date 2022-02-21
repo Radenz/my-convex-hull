@@ -1,5 +1,4 @@
-from typing import TypeAlias, Any
-import numpy as np
+from typing import TypeAlias
 import numpy.typing as npt
 
 Point: TypeAlias = npt.NDArray
