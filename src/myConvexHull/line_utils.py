@@ -204,7 +204,7 @@ def _distance(point, line):
     _point = np.array(point)
     a = np.array(line[0])
     b = np.array(line[1])
-    return np.abs(np.cross(b - a, _point - a)/np.linalg.norm(b - a))
+    return np.abs(np.cross(b - a, _point - a) / np.linalg.norm(b - a))
 
 
 def _midpoint(line):
