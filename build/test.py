@@ -12,6 +12,7 @@ if base != "test":
     os.chdir("test")
 
 files = [filename for filename in os.listdir(".") if isfile(filename)]
+files.remove("randomized.py")
 
 print("\033[38;5;14mRunning all tests...\033[0m")
 start = time.time()
