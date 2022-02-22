@@ -5,7 +5,7 @@ from os.path import basename
 def build_package():
     base = basename(os.getcwd())
 
-    if (base == "build"):
+    if base == "build":
         os.chdir("..")
 
     print("\033[38;5;14mBuilding myConvexHull package...\033[0m")

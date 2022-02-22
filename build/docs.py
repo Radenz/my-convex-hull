@@ -3,7 +3,7 @@ from os.path import basename
 
 base = basename(os.getcwd())
 
-if (base == "build"):
+if base == "build":
     os.chdir("..")
 
 print("\033[38;5;14mGenerating package documentation...\033[0m")
