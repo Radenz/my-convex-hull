@@ -46,7 +46,7 @@ of points.</p>
 <p><code>line</code>: the line which the farthest point distance is
 calculated from</p>
 <p>Returns:</p>
-<p>an point which has the maximum distance of the specified
+<p>An point which has the maximum distance of the specified
 line.</p></div>
 </dd>
 <dt id="myConvexHull.line_utils.get_lower_points"><code class="name flex">
@@ -58,7 +58,7 @@ line.</p></div>
 <p><code>points</code>: an array of points to get the subset of points of</p>
 <p><code>line</code>: the line which the subset of points is under</p>
 <p>Returns:</p>
-<p>an array of points which lies under the specified line.</p></div>
+<p>An array of points which lies under the specified line.</p></div>
 </dd>
 <dt id="myConvexHull.line_utils.get_upper_points"><code class="name flex">
 <span>def <span class="ident">get_upper_points</span></span>(<span>points, line) ‑> numpy.ndarray</span>
@@ -69,7 +69,17 @@ line.</p></div>
 <p><code>points</code>: an array of points to get the subset of points of</p>
 <p><code>line</code>: the line which the subset of points is over</p>
 <p>Returns:</p>
-<p>an array of points which lies over the specified line.</p></div>
+<p>An array of points which lies over the specified line.</p></div>
+</dd>
+<dt id="myConvexHull.line_utils.is_vertical"><code class="name flex">
+<span>def <span class="ident">is_vertical</span></span>(<span>line) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if a given line is vertical or not.</p>
+<p>Args:</p>
+<p><code>line</code>: the line to check</p>
+<p>Returns:</p>
+<p><code>True</code> if the given line is vertical, <code>False</code> otherwise.</p></div>
 </dd>
 </dl>
 </section>
@@ -92,6 +102,7 @@ line.</p></div>
 <li><code><a title="myConvexHull.line_utils.get_farthest_point" href="#myConvexHull.line_utils.get_farthest_point">get_farthest_point</a></code></li>
 <li><code><a title="myConvexHull.line_utils.get_lower_points" href="#myConvexHull.line_utils.get_lower_points">get_lower_points</a></code></li>
 <li><code><a title="myConvexHull.line_utils.get_upper_points" href="#myConvexHull.line_utils.get_upper_points">get_upper_points</a></code></li>
+<li><code><a title="myConvexHull.line_utils.is_vertical" href="#myConvexHull.line_utils.is_vertical">is_vertical</a></code></li>
 </ul>
 </li>
 </ul>

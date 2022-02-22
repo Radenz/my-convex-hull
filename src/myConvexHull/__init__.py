@@ -1,6 +1,7 @@
 """
-This package contains a single `convex_hull` function to calculate
-the points of a convex hull from a given array of points.
+This package contains the main convex hull calculation function
+to calculate the points of a convex hull from a given array of
+points.
 """
 
 from hashlib import new
@@ -31,6 +32,22 @@ def convex_hull(points, base_line=None, direction=None) -> Points:
 
     An array of points that construct the convex hull of the given array
     of points.
+
+    Example usage:
+
+    ```python
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from myConvexHull import convex_hull
+    from myConvexHull.point_utils import X, Y
+    points = np.random.randint(-30, 30, [10, 2])
+    hull = convex_hull(points)
+    points = np.transpose(points)
+    hull = np.transpose(hull)
+    plt.scatter(points[X], points[Y])
+    plt.plot(hull[X], hull[Y])
+    plt.show()
+    ```
     """
 
     if base_line:
@@ -143,9 +160,9 @@ def first_merge(left_vertex, upper_vertices, right_vertex, lower_vertices) -> Po
 def merge(left_vertices, mid_vertex, right_vertices, direction) -> Points:
     # type: (Point, Points, Point, Points) -> Points
     """
-    Merge subsolution of upper points hull and lower points hull
-    after splitted by the line through `left_vertex` and
-    `right_vertex` in the first iteration.
+    Merge subsolution of leftside points hull and rightside points hull
+    after splitted by the line through the farthest point from the line
+    of the previous iteration.
 
     Args:
 
@@ -177,6 +194,18 @@ def merge(left_vertices, mid_vertex, right_vertices, direction) -> Points:
 
 def _get_leftmost_point(points):
     # type: (Points) -> tuple[Point, int]
+    """
+    Gets the bottom-leftmost point and its index from a given
+    set of points.
+
+    Args:
+
+    `points`: an array of points to get the bottom-leftmost of
+
+    Returns:
+
+    A tuple containing the bottom-leftmost point and its index.
+    """
     if len(points) == 0:
         return None
 
@@ -192,7 +221,19 @@ def _get_leftmost_point(points):
 
 
 def _get_rightmost_point(points):
-    # type: (np.ndarray[np.ndarray]) -> np.ndarray
+    # type: (Points) -> tuple[Point, int]
+    """
+    Gets the top-rightmost point and its index from a given
+    set of points.
+
+    Args:
+
+    `points`: an array of points to get the top-rightmost of
+
+    Returns:
+
+    A tuple containing the top-rightmost point and its index.
+    """
     if len(points) == 0:
         return None
 
@@ -212,4 +253,6 @@ class Direction(Enum):
     Vertical direction enumerated values.
     """
     UPWARDS = 0
+    "Upwards direction"
     DOWNWARDS = 1
+    "Downwards direction"

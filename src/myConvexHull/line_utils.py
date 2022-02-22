@@ -84,11 +84,36 @@ def get_farthest_point(points, line) -> Point:
 
 
 def is_vertical(line) -> bool:
+    # type: (Line) -> bool
+    """
+    Checks if a given line is vertical or not.
+
+    Args:
+
+    `line`: the line to check
+
+    Returns:
+
+    `True` if the given line is vertical, `False` otherwise.
+    """
     return line[0][X] == line[1][X]
 
 
 def _is_above_line(point, line):
     # type: (Point, Line) -> bool
+    """
+    Checks if a specific point is above a given line.
+
+    Args:
+
+    `point`: the point to check
+
+    `line`: the given line
+
+    Returns:
+
+    `True` if the point is above the line, `False` otherwise.
+    """
     slope = _slope(line[0], line[1])
     offset = _offset(line[0], slope)
     return point[Y] - slope * point[X] > offset
@@ -96,21 +121,82 @@ def _is_above_line(point, line):
 
 def _is_below_line(point, line):
     # type: (Point, Line) -> bool
+    """
+    Checks if a specific point is below a given line.
+
+    Args:
+
+    `point`: the point to check
+
+    `line`: the given line
+
+    Returns:
+
+    `True` if the point is below the line, `False` otherwise.
+    """
     slope = _slope(line[0], line[1])
     offset = _offset(line[0], slope)
     return point[Y] - slope * point[X] < offset
 
 
 def _slope(a: Point, b: Point) -> float:
+    # type: (Point, Point) -> bool
+    """
+    Calculates the slope of a line passing through two given
+    points.
+
+    .. warning::
+        Checks beforehand whether the line is vertical using
+        `is_vertical` function, otherwise may throw an error
+        if the slope is undefined (for vertical line).
+
+    Args:
+
+    `a`: the first point that the line passes through
+
+    `b`: the second point that the line passes through
+
+    Returns:
+
+    The slope of the line.
+    """
     return (b[Y] - a[Y]) / (b[X] - a[X])
 
 
 def _offset(a: Point, slope: float) -> float:
+    # type: (Point, float) -> float
+    """
+    Calculates the y-offset from the origin of a line passing
+    through a point with a given slope.
+
+    Args:
+
+    `a`: the point that the line passes through
+
+    `slope`: the slope of the line
+
+    Returns:
+
+    The y-offset of the line from the origin.
+    """
     return a[1] - slope * a[0]
 
 
 def _distance(point, line):
     # type: (Point, Line) -> float
+    """
+    Calculates the distance between a point and a line.
+
+    Args:
+
+    `point`: the point to calculate the distance of
+
+    `line`: the point to calculate the distance of
+
+    Returns:
+
+    The distance between the specified point and line.
+    """
     _point = np.array(point)
     a = np.array(line[0])
     b = np.array(line[1])
