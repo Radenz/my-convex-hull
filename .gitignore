@@ -8,3 +8,8 @@ dist/**
 
 # Reload build
 build/reload.py
+
+# firebase
+.firebase
+.firebaserc
+firebase.json
