@@ -4,7 +4,7 @@ points, including helper functions that is used in the main
 module, lines and points operations, etc.
 """
 from myConvexHull.dtype import Point, Points, Line
-from myConvexHull.point_utils import X, Y
+from myConvexHull.point_utils import X, Y, distance
 import numpy as np
 
 
@@ -76,7 +76,11 @@ def get_farthest_point(points, line) -> Point:
     for i in range(len(points)):
         point = points[i]
         dist = _distance(point, line)
-        if dist > farthest_distance:
+        if dist > farthest_distance or (
+            dist == farthest_distance and
+            distance(point, _midpoint(line)) <
+            distance(farthest_point, _midpoint(line))
+        ):
             farthest_distance = dist
             farthest_point = point
             index = i
@@ -201,3 +205,19 @@ def _distance(point, line):
     a = np.array(line[0])
     b = np.array(line[1])
     return np.abs(np.cross(b - a, _point - a)/np.linalg.norm(b - a))
+
+
+def _midpoint(line):
+    # type: (Line) -> Point
+    """
+    Calculates the midpoint of a line.
+
+    Args:
+
+    `line`: the line to calculate the midpoint of
+
+    Return:
+
+    The midpoint of the line.
+    """
+    return (line[0] + line[1]) / 2
