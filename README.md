@@ -8,7 +8,7 @@
 <h3 align="center">myConvexHull (myCH)</h3>
 <h4 align="center">By Raden Rifqi Rahman (13520166)</h4>
  <p align="center">
-    A simple complex hull calculation Python package
+    A simple convex hull calculation Python package
     powered by divide & conquer algorithm.
     <br />
     <a href="test">Examples</a>
@@ -25,9 +25,9 @@
 - [Uninstalling](#uninstalling)
 
 ## About The Project
-This is a simple Python package to calculate the complex hull of
+This is a simple Python package to calculate the convex hull of
 a given set of points. The package wraps a single function to
-calculate the complex hull of a given set of points using divide &
+calculate the convex hull of a given set of points using divide &
 conquer algorithm. This project is made to fulfill
 `Tugas Kecil 2 IF2211 Strategi Algoritma`.
 
