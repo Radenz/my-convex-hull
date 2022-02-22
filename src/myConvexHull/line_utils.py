@@ -21,7 +21,7 @@ def get_upper_points(points, line) -> Points:
 
     Returns:
 
-    an array of points which lies over the specified line.
+    An array of points which lies over the specified line.
     """
     upper_points = np.ndarray([0, 2])
     for point in points:
@@ -43,7 +43,7 @@ def get_lower_points(points, line) -> Points:
 
     Returns:
 
-    an array of points which lies under the specified line.
+    An array of points which lies under the specified line.
     """
     lower_points = np.ndarray([0, 2])
     for point in points:
@@ -67,7 +67,7 @@ def get_farthest_point(points, line) -> Point:
 
     Returns:
 
-    an point which has the maximum distance of the specified
+    An point which has the maximum distance of the specified
     line.
     """
     farthest_point = points[0]
@@ -81,6 +81,10 @@ def get_farthest_point(points, line) -> Point:
             farthest_point = point
             index = i
     return (farthest_point, index)
+
+
+def is_vertical(line) -> bool:
+    return line[0][X] == line[1][X]
 
 
 def _is_above_line(point, line):

@@ -26,7 +26,7 @@ def less_than(a, b) -> bool:
 
     Return:
 
-    true if the true condition is met, false otherwise.
+    `True` if the true condition is met, `False` otherwise.
     """
     return a[X] < b[X] or (a[X] == b[X] and a[Y] < b[Y])
 
@@ -47,6 +47,6 @@ def greater_than(a, b) -> bool:
 
     Return:
 
-    true if the true condition is met, false otherwise.
+    `True` if the true condition is met, `False` otherwise.
     """
     return a[X] > b[X] or (a[X] == b[X] and a[Y] > b[Y])

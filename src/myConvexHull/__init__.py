@@ -3,10 +3,11 @@ This package contains a single `convex_hull` function to calculate
 the points of a convex hull from a given array of points.
 """
 
+from hashlib import new
 import numpy as np
-from myConvexHull.point_utils import greater_than, less_than
-from myConvexHull.dtype import Points, NullableLine, Line, Point
-from myConvexHull.line_utils import get_farthest_point, get_lower_points, get_upper_points
+from myConvexHull.point_utils import *
+from myConvexHull.dtype import *
+from myConvexHull.line_utils import *
 from enum import Enum
 
 
@@ -32,8 +33,6 @@ def convex_hull(points, base_line=None, direction=None) -> Points:
     of points.
     """
 
-    # TODO: Check if the splitting line is vertical
-
     if base_line:
         if len(points) == 0:
             return np.ndarray([0, 2])
@@ -47,11 +46,20 @@ def convex_hull(points, base_line=None, direction=None) -> Points:
         new_base_line_b = (farthest_point, base_line[1])
 
         func = get_upper_points if direction == Direction.UPWARDS else get_lower_points
-        new_points_a = func(points, new_base_line_a)
-        new_points_b = func(points, new_base_line_b)
 
-        chl = convex_hull(new_points_a, new_base_line_a, direction)
-        chr = convex_hull(new_points_b, new_base_line_b, direction)
+        # Guard
+        if is_vertical(new_base_line_a):
+            chl = np.ndarray([0, 2])
+        else:
+            new_points_a = func(points, new_base_line_a)
+            chl = convex_hull(new_points_a, new_base_line_a, direction)
+
+        # Guard
+        if is_vertical(new_base_line_b):
+            chr = np.ndarray([0, 2])
+        else:
+            new_points_b = func(points, new_base_line_b)
+            chr = convex_hull(new_points_b, new_base_line_b, direction)
 
         hull = merge(chl, farthest_point, chr, direction)
     else:
@@ -63,7 +71,13 @@ def convex_hull(points, base_line=None, direction=None) -> Points:
         points = np.delete(points, [lmindex, rmindex], axis=0)
 
         line: Line = (leftmost_point, rightmost_point)
-        (upper_points, lower_points) = split(points, line)
+
+        # Guard
+        if is_vertical(line):
+            upper_points = np.ndarray([0, 2])
+            lower_points = np.ndarray([0, 2])
+        else:
+            (upper_points, lower_points) = split(points, line)
 
         chu = convex_hull(upper_points, line, Direction.UPWARDS)
         chl = convex_hull(lower_points, line, Direction.DOWNWARDS)
