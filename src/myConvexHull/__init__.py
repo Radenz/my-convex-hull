@@ -4,7 +4,6 @@ to calculate the points of a convex hull from a given array of
 points.
 """
 
-from hashlib import new
 import numpy as np
 from myConvexHull.point_utils import *
 from myConvexHull.dtype import *
