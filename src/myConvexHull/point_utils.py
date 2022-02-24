@@ -54,7 +54,7 @@ def greater_than(a, b) -> bool:
 
 
 def distance(a, b) -> float:
-    # type: (Point, Point) -> bool
+    # type: (Point, Point) -> float
     """
     Calculates the distance between two points.
 
