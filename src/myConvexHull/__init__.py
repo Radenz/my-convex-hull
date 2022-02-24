@@ -191,6 +191,28 @@ def merge(left_vertices, mid_vertex, right_vertices, direction) -> Points:
     return hull
 
 
+def random_color() -> str:
+    # type: () -> str
+    """
+    Generates a random color in the form of string of RGB hex values.
+    For example; `#ffffff`, `#123456`, `#a42c30`, etc.
+
+    Returns:
+
+    A random color in the form of string of RGB hex values.
+    """
+    r = hex(np.random.randint(0, 256))[2:]
+    g = hex(np.random.randint(0, 256))[2:]
+    b = hex(np.random.randint(0, 256))[2:]
+    if len(r) == 1:
+        r = "0" + r
+    if len(g) == 1:
+        g = "0" + g
+    if len(b) == 1:
+        b = "0" + b
+    return f"#{r}{g}{b}"
+
+
 def _get_leftmost_point(points):
     # type: (Points) -> tuple[Point, int]
     """
