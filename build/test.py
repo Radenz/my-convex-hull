@@ -8,7 +8,7 @@ base = basename(os.getcwd())
 if base == "build":
     os.chdir("..")
 
-if base != "test":
+if basename(os.getcwd()) != "test":
     os.chdir("test")
 
 files = [filename for filename in os.listdir(".") if isfile(filename)]

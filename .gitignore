@@ -16,3 +16,6 @@ build/reload.py
 .firebase
 .firebaserc
 firebase.json
+
+# document
+**.docx
