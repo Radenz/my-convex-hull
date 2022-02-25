@@ -1,21 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
-from myConvexHull import convex_hull
+from myConvexHull import convex_hull, random_color
 from myConvexHull.point_utils import X, Y
 
 
-def random_color():
-    r = hex(np.random.randint(0, 256))[2:]
-    g = hex(np.random.randint(0, 256))[2:]
-    b = hex(np.random.randint(0, 256))[2:]
-    if len(r) == 1:
-        r = "0" + r
-    if len(g) == 1:
-        g = "0" + g
-    if len(b) == 1:
-        b = "0" + b
-    return f"#{r}{g}{b}"
+def throw():
+    print(f"Incorrect argument format : {config}")
+    print(f"Usage: [config [config [config [...]]]]")
+    print()
+    print(f"\tconfig\t\"[<x-min>, <x-max>, <y-min>, <y-max>, <count>]\"")
+    print(f"\texample: \"[-50, 0, -50, -25, 15]\"")
+    print()
+    exit(1)
 
 
 parser = argparse.ArgumentParser()
@@ -27,23 +24,36 @@ configs = []
 cfgs = args.cfgs
 
 if len(cfgs) == 0:
-    configs.append([-50, 0, 15])
-    configs.append([-25, 25, 15])
-    configs.append([0, 50, 15])
+    configs.append([-50, 0, -50, -25, 15])
+    configs.append([-25, 25, -10, 10, 15])
+    configs.append([0, 50, 25, 50, 15])
+
 
 for config in cfgs:
-    config = eval(config)
+    try:
+        config = eval(config)
+    except:
+        throw()
     if type(config) != list:
-        raise f"Incorrect argument format : {config}"
-    if len(config) != 3:
-        raise f"Incorrect argument format : {config}"
-    if type(config[0]) != int and type(config[1]) != int and type(config[2]) != int:
-        raise f"Incorrect argument format : {config}"
+        throw()
+    if len(config) != 5:
+        throw()
+
+    for i in range(5):
+        if type(config[i]) != int:
+            throw()
 
     configs.append(config)
 
+plt.title('Randomized Testing')
+plt.xlabel("x")
+plt.ylabel("y")
+
 for config in configs:
-    points = np.random.randint(config[0], config[1], [config[2], 2])
+    x = np.random.randint(config[0], config[1], [config[4], 1])
+    y = np.random.randint(config[2], config[3], [config[4], 1])
+    points = x
+    points = np.append(points, y, axis=1)
     hull = convex_hull(points)
     points = np.transpose(points)
     hull = np.transpose(hull)
