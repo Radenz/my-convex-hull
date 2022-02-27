@@ -11,7 +11,7 @@
     A simple convex hull calculation Python package
     powered by divide & conquer algorithm.
     <br />
-    <a href="test">Examples</a>
+    <a href="examples">Examples</a>
     ·
     <a href="https://mych-docs.web.app/">Documentation</a>
 </div>
